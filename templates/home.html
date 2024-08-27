@@ -1,7 +1,132 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container-sc text-white d-flex align-items-center justify-content-center">
+    <!-- Search bar -->
+    <div class="container p-5 justify-content-center">
+        <div class="input-group rounded h-100">
+            <input id="search-input" type="search" class="form-control form-control-lg rounded" placeholder="Search by title ..." aria-label="Search">
+            <div id="search-results" class="list-group mt-2 position-absolute w-100"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5 text-white ">
+    <!-- Anime details container -->
+    <div id="anime-details" class="row" style="display: none;">
+        <div class="col-md-4">
+            <img id="anime-cover" src="" class="img-fluid" alt="Anime Cover">
+        </div>
+        <div class="col-md-12">
+            <h2 id="anime-title"></h2>
+            <p id="anime-synopsis"></p>
+            <p><strong>Genres:</strong> <span id="anime-genres"></span></p>
+            <p><strong>Score:</strong> <span id="anime-score"></span></p>
+            <p><strong>Type:</strong> <span id="anime-type"></span></p>
+            <p><strong>Studios:</strong> <span id="anime-studios"></span></p>
+            <p><strong>Rating:</strong> <span id="anime-rating"></span></p>
+            <p><strong>Favorites:</strong> <span id="anime-favorites"></span></p>
+        </div>
+    </div>
+
+    <!-- Recommendation section -->
+    <div id="recommendation-section" class="row mt-5" style="display: none;">
+        <h3>Recommended Animes</h3>
+        <div id="recommendations" class="row"></div>
+    </div>
+</div>
 
 
+<script>
+// Search functionality
+document.getElementById('search-input').addEventListener('input', function() {
+    let query = this.value.toLowerCase();
 
+    if (query.length > 0) {
+        fetch('/search?q=' + query)
+            .then(response => response.json())
+            .then(data => {
+                let results = document.getElementById('search-results');
+                results.innerHTML = '';
+
+                data.slice(0, 10).forEach(item => {
+                    let a = document.createElement('a');
+                    a.href = '#';
+                    a.className = 'list-group-item list-group-item-action';
+                    a.textContent = item.Name;
+                    a.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        document.getElementById('search-input').value = item.Name;  // Set the clicked title into the search input
+                        document.getElementById('search-input').focus();  // Refocus the search input
+                        fetchAnimeDetails(item.anime_id);  // Fetch and display anime details
+                        results.innerHTML = '';  // Clear the search results after selection
+                    });
+                    results.appendChild(a);
+                });
+            });
+    } else {
+        document.getElementById('search-results').innerHTML = '';
+    }
+});
+
+// Refocus search bar when clicking outside the result box
+document.addEventListener('click', function(e) {
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+
+    if (!searchResults.contains(e.target) && e.target !== searchInput) {
+        searchResults.innerHTML = '';  // Clear results if clicked outside
+        searchInput.focus();  // Refocus the search input
+    }
+});
+
+// Fetch and display anime details and recommendations
+function fetchAnimeDetails(anime_id) {
+    fetch('/anime/' + anime_id)
+        .then(response => response.json())
+        .then(data => {
+            let anime = data.anime;
+            let recommendations = data.recommendations;
+
+            // Filling Anime details
+            document.getElementById('anime-cover').src = anime['Image URL'];
+            document.getElementById('anime-title').textContent = anime['Name'];
+            document.getElementById('anime-synopsis').textContent = anime['Synopsis'];
+            document.getElementById('anime-genres').textContent = anime['Genres'];
+            document.getElementById('anime-score').textContent = anime['Score'];
+            document.getElementById('anime-type').textContent = anime['Type'];
+            document.getElementById('anime-studios').textContent = anime['Studios'];
+            document.getElementById('anime-rating').textContent = anime['Rating'];
+            document.getElementById('anime-favorites').textContent = anime['Favorites'];
+
+            // Show anime details
+            document.getElementById('anime-details').style.display = 'block';
+
+            // Filling recommendations
+            let recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.innerHTML = '';
+
+            recommendations.forEach(rec => {
+                let card = document.createElement('div');
+                card.className = 'col-md-2';
+
+                let cardContent = `
+                    <div class="card mb-4">
+                        <img src="${rec['Image URL']}" class="card-img-top" alt="${rec['Name']}">
+                        <div class="card-body text-center">
+                            <p class="card-text">${rec['Name']}</p>
+                        </div>
+                    </div>
+                `;
+                card.innerHTML = cardContent;
+                recommendationsDiv.appendChild(card);
+            });
+
+            // Show recommendations section
+            document.getElementById('recommendation-section').style.display = 'block';
+        });
+}
+
+
+</script>
 {% endblock %}

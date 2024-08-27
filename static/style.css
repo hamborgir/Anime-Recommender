@@ -2,3 +2,13 @@
     height: 10vh;
     padding: 20px 15px;
 }
+
+.container-sc {
+    height: 10em;
+    background-color: rgba(32, 30, 32, 0.7);
+    /* color: white; */
+}
+
+:root {
+    color: white;
+}

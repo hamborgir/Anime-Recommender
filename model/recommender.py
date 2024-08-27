@@ -28,7 +28,7 @@ class Recommender:
         
         """
 
-        count = count + 1
+        count = count + 2
 
         if id is None:
             if title is None:
@@ -36,10 +36,10 @@ class Recommender:
             id = self.find_anime_id(title)
 
         idx = self.find_anime_index(id = id)
-        rec_idx = np.argsort(self.__mat[idx])[:-count:-1]
+        rec_idx = np.argsort(self.__mat[idx])[-2:-count:-1]
 
         df = self.data.loc[rec_idx, self.__publ_col].reset_index(drop=True)
-        df = pd.concat([pd.DataFrame({"similarity":np.sort(self.__mat[idx])[:-count:-1]}), df], axis=1)
+        df = pd.concat([pd.DataFrame({"similarity":np.sort(self.__mat[idx])[-2:-count:-1]}), df], axis=1)
         
         return df
         # return pd.DataFrame({"id" : self.data.loc[np.argsort(self.__mat[idx])[:-count-1:-1], "anime_id"],
