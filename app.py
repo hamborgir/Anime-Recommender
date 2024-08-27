@@ -1,11 +1,22 @@
-from flask import Flask, url_for, render_template
+from flask import Flask, render_template, request, jsonify
+import pandas as pd
+from model.recommender import Recommender
 
 app = Flask(__name__)
 
-@app.route("/")
+recommender = Recommender()
+
+@app.route("/", methods=["GET"])
 def home():
-    return "<p> TES </p>"
+    return render_template("home.html")
+    pass
 
+def before_request():
+    app.jinja_env.cache = {}
 
-with app.test_request_context():
-    print(url_for("static", filename = "style.css"))
+if __name__ == "__main__":
+    app.jinja_env.auto_reload = True
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.before_request(before_request)
+    app.run(debug=True)
+    # print(recommender.recommend(title = "trigun"))
