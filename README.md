@@ -12,7 +12,7 @@ The dataset used for this project is sourced from [Kaggle's MyAnimeList Dataset]
 
 ## Installation
 
-To install and run the Flask application locally, follow these steps:
+`pip` and `venv` modules are assumed to be installed already. To install and run the Flask application locally, follow these steps:
 
 1. **Clone the repository:**
 
