@@ -10,9 +10,16 @@ The Anime Recommender System uses cosine similarity to provide recommendations f
 
 The dataset used for this project is sourced from [Kaggle's MyAnimeList Dataset](https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset?select=anime-dataset-2023.csv). This dataset contains detailed information about various anime titles, including genres, synopses, ratings, and more.
 
+## Prerequisites
+Install the required dependencies using:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
 ## Installation
 
-`pip` and `venv` modules are assumed to be installed already. To install and run the Flask application locally, follow these steps:
+To install and run the Flask application locally, follow these steps:
 
 1. **Clone the repository:**
 
@@ -28,13 +35,8 @@ The dataset used for this project is sourced from [Kaggle's MyAnimeList Dataset]
    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
    ```
 
-3. **Install the required dependencies:**
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Generate the similarity matrix:**
+3. **Generate the similarity matrix:**
 
    Before running the Flask app, open the `cleaner.ipynb` notebook and run all cells. This will generate the `similarity_matrix.npy` file, which is necessary for the recommendation system to function.
    
@@ -42,7 +44,7 @@ The dataset used for this project is sourced from [Kaggle's MyAnimeList Dataset]
    cd model
    jupyter notebook cleaner.ipynb
    ```
-6. **Run the Flask application:**
+4. **Run the Flask application:**
 
    ```bash
    cd..
@@ -54,7 +56,7 @@ The dataset used for this project is sourced from [Kaggle's MyAnimeList Dataset]
    python app.py
    ```
 
-7. **Access the application:**
+5. **Access the application:**
 
    Open your web browser and navigate to `http://127.0.0.1:5000/` to use the Anime Recommender System.
 
