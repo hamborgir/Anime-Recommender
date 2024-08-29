@@ -37,14 +37,20 @@ To install and run the Flask application locally, follow these steps:
 4. **Generate the similarity matrix:**
 
    Before running the Flask app, open the `cleaner.ipynb` notebook and run all cells. This will generate the `similarity_matrix.npy` file, which is necessary for the recommendation system to function.
-
-5. **Run the Flask application:**
+   
+   ```bash
+   cd model
+   jupyter notebook cleaner.ipynb
+   ```
+6. **Run the Flask application:**
 
    ```bash
+   cd..
    flask --app app.py run
    ```
-   Runner also included in the code,
+   Runner also included in the code, so the `app.py` can just be run directly.
    ```bash
+   cd..
    python app.py
    ```
 
