@@ -69,6 +69,12 @@ The application provides the following functionalities:
 - **Recommendations:** The system generates and displays up to 10 recommended animes based on the cosine similarity calculated between the selected anime and others in the dataset.
 - **Responsive Design:** The interface is built using Bootstrap and is fully responsive, ensuring a smooth user experience across different devices.
 
+## Screenshots
+![Home menu](/screenshots/sc-1.png)
+![Searching anime](/screenshots/sc-2.png)
+![Searched anime details](/screenshots/sc-3.png)
+![Anime recommendations of searched anime](/screenshots/sc-4.png)
+
 ## Contributing
 
 Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
